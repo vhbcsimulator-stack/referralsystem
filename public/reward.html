@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reward | Royale's Teppanyaki Capital</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .reward-card {
+            max-width: 600px;
+            width: 100%;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            border: 2px solid var(--primary);
+            background: linear-gradient(135deg, var(--white), var(--bg-teal));
+            padding: 50px 40px;
+        }
+
+        .celebration-icon {
+            font-size: 4rem;
+            margin-bottom: 20px;
+            display: inline-block;
+            animation: bounce 2s infinite;
+        }
+
+        .gift-amount {
+            font-size: 3.5rem;
+            font-weight: 800;
+            color: var(--primary);
+            margin: 20px 0;
+            letter-spacing: -0.05em;
+        }
+
+        .validity-box {
+            background: rgba(15, 110, 86, 0.05);
+            padding: 15px;
+            border-radius: 12px;
+            margin-top: 30px;
+            border-left: 5px solid var(--primary);
+            display: inline-block;
+        }
+
+        .validity-text {
+            color: var(--dark-teal);
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+
+        .confetti {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background-color: var(--primary);
+            border-radius: 50%;
+            opacity: 0.6;
+            animation: fall linear infinite;
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {transform: translateY(0);}
+            40% {transform: translateY(-20px);}
+            60% {transform: translateY(-10px);}
+        }
+
+        @keyframes fall {
+            to {
+                transform: translateY(100vh) rotate(360deg);
+            }
+        }
+
+        .seal {
+            position: absolute;
+            bottom: -20px;
+            right: -20px;
+            opacity: 0.1;
+            transform: rotate(-15deg);
+        }
+    </style>
+</head>
+<body style="justify-content: center;">
+
+    <div id="confetti-container"></div>
+
+    <header>
+        <div class="info-pill">✨ Reward Unlocked</div>
+        <h1>Congratulations!</h1>
+    </header>
+
+    <main class="reward-card card" id="certificate">
+        <div class="celebration-icon">🏆</div>
+        <h2 style="font-size: 2rem; color: var(--dark-teal); margin-bottom: 10px;">Thank you for referring 3+ clients!</h2>
+        <p style="color: var(--secondary); font-size: 1.1rem;">As a specialized reward for your loyalty, you have been awarded:</p>
+        
+        <div class="gift-amount">₱10,000</div>
+        <p style="font-weight: 600; color: var(--dark-teal); font-size: 1.2rem;">Worth of Gift Certificate</p>
+        <p style="color: var(--secondary); font-size: 0.9rem; margin-top: 5px;">at Royale's Teppanyaki Capital</p>
+
+        <div class="validity-box">
+            <span class="validity-text">This gift check is only valid until <span id="expiryDate">...</span></span>
+        </div>
+
+        <div style="margin-top: 20px; color: var(--secondary); font-size: 1.1rem;">
+            Referrer: <span id="referrerName" style="font-weight: 600; color: var(--primary);">...</span>
+        </div>
+        <div style="margin-top: 5px; color: var(--secondary); font-size: 1rem;">
+            Referral Code: <span id="referralCode" style="font-weight: 600; color: var(--dark-teal);">...</span>
+        </div>
+
+        <div style="margin-top: 40px; display: flex; gap: 15px; justify-content: center;">
+            <button class="btn-primary" onclick="window.print()" style="max-width: 250px;">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                Save Certificate
+            </button>
+        </div>
+
+        <!-- Decorative Seal -->
+        <svg class="seal" width="200" height="200" viewBox="0 0 24 24" fill="var(--primary)"><path d="M12 2L4.5 20.29l.71.71L12 18l6.79 3 .71-.71z"/></svg>
+    </main>
+
+    <footer style="margin-top: 30px; color: var(--secondary); font-size: 0.8rem; text-align: center;">
+        <p>© 2026 Royale's Teppanyaki Capital. All rights reserved.</p>
+    </footer>
+
+    <script>
+        // Extract URL Parameters
+        const params = new URLSearchParams(window.location.search);
+        const name = params.get('name') || "Valued Referrer";
+        const code = params.get('referral_code') || "N/A";
+        const expiry = params.get('expiry') || "the date specified below";
+
+        document.getElementById('expiryDate').textContent = expiry;
+        document.getElementById('referrerName').textContent = name;
+        document.getElementById('referralCode').textContent = code;
+
+        // Generate Confetti
+        const container = document.getElementById('confetti-container');
+        const colors = ['#C62828', '#D32F2F', '#1A1A1A', '#424242', '#FFCDD2'];
+
+        for (let i = 0; i < 50; i++) {
+            const confetti = document.createElement('div');
+            confetti.className = 'confetti';
+            confetti.style.left = Math.random() * 100 + 'vw';
+            confetti.style.animationDuration = (Math.random() * 3 + 2) + 's';
+            confetti.style.animationDelay = (Math.random() * 2) + 's';
+            confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+            confetti.style.width = (Math.random() * 10 + 5) + 'px';
+            confetti.style.height = confetti.style.width;
+            container.appendChild(confetti);
+        }
+    </script>
+</body>
+</html>

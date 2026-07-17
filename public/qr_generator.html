@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teal Tech | Premium QR Generator</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script type="text/javascript" src="https://unpkg.com/qr-code-styling@1.5.0/lib/qr-code-styling.js"></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <header>
+        <div class="info-pill">✨ Royale's Teppanyaki Capital Reward</div>
+        <h1>VHBC Referral Reward</h1>
+        <p class="subtitle">Secure, Customizable, Premium QR Generation</p>
+    </header>
+
+    <main class="main-container">
+        <section class="controls">
+            <div class="card" style="margin-bottom: 30px;">
+                <h2>
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
+                        <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
+                    </svg>
+                    Input Data
+                </h2>
+                <div class="input-group">
+                    <label for="fullName">Full Name</label>
+                    <input type="text" id="fullName" placeholder="John Doe" value="">
+                </div>
+                <div class="input-group">
+                    <label for="email">Email Address</label>
+                    <input type="email" id="email" placeholder="example@gmail.com" value="">
+                </div>
+                <div class="input-group">
+                    <label>Expiration Date</label>
+                    <div style="position: relative;">
+                        <input type="text" id="expiryDisplay" disabled value="Calculating..."
+                            style="background: rgba(163, 217, 210, 0.2); cursor: not-allowed; border-style: dashed;">
+                        <svg style="position: absolute; right: 12px; top: 50%; translate: 0 -50%; color: var(--secondary);"
+                            width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                            <line x1="16" y1="2" x2="16" y2="6"></line>
+                            <line x1="8" y1="2" x2="8" y2="6"></line>
+                            <line x1="3" y1="10" x2="21" y2="10"></line>
+                        </svg>
+                    </div>
+                    <small style="color: var(--secondary); margin-top: 8px; display: block; font-weight: 500;">Valid for
+                        3 months from today</small>
+                </div>
+            </div>
+
+            <div class="card">
+                <h2>
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"></path>
+                    </svg>
+                    Customization
+                </h2>
+                <div class="customization-grid">
+                    <div class="control-section-title">Body Appearance</div>
+                    <div class="input-group">
+                        <label for="dotStyle">Dot Style</label>
+                        <select id="dotStyle">
+                            <option value="square">Square</option>
+                            <option value="dots">Dots</option>
+                            <option value="rounded" selected>Rounded</option>
+                            <option value="extra-rounded">Extra Rounded</option>
+                            <option value="classy">Classy</option>
+                            <option value="classy-rounded">Classy Rounded</option>
+                        </select>
+                    </div>
+                    <div class="input-group">
+                        <label for="dotColor">Dot Color</label>
+                        <div class="color-input-wrapper">
+                            <input type="color" id="dotColor" value="#C62828">
+                            <span id="dotColorHex">#C62828</span>
+                        </div>
+                    </div>
+
+                    <div class="control-section-title">Corner Design</div>
+                    <div class="input-group">
+                        <label for="cornerStyle">Corner Shape</label>
+                        <select id="cornerStyle">
+                            <option value="square">Square</option>
+                            <option value="dot">Dot</option>
+                            <option value="extra-rounded" selected>Extra Rounded</option>
+                        </select>
+                    </div>
+                    <div class="input-group">
+                        <label for="cornerColor">Corner Color</label>
+                        <div class="color-input-wrapper">
+                            <input type="color" id="cornerColor" value="#1A1A1A">
+                            <span id="cornerColorHex">#1A1A1A</span>
+                        </div>
+                    </div>
+
+                    <div class="control-section-title">Background & Frame</div>
+                    <div class="input-group" style="grid-column: span 2;">
+                        <label for="bgColor">Background Color</label>
+                        <div class="color-input-wrapper">
+                            <input type="color" id="bgColor" value="#ffffff">
+                            <span id="bgColorHex">#FFFFFF</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="preview-area">
+            <div id="canvas-container"></div>
+            <div class="actions">
+                <button class="btn-primary" id="downloadPng">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                        <polyline points="7 10 12 15 17 10"></polyline>
+                        <line x1="12" y1="15" x2="12" y2="3"></line>
+                    </svg>
+                    Download PNG
+                </button>
+                <button class="btn-secondary" id="downloadSvg">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                        <polyline points="7 10 12 15 17 10"></polyline>
+                        <line x1="12" y1="15" x2="12" y2="3"></line>
+                    </svg>
+                    Download SVG
+                </button>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        // Constants & State
+        const CONFIG = {
+            primaryColor: '#C62828',
+            dark: '#1A1A1A',
+        };
+
+        // Initialize QR Code Styling
+        const qrCode = new QRCodeStyling({
+            width: 300,
+            height: 300,
+            type: "svg",
+            data: "",
+            dotsOptions: {
+                color: CONFIG.primaryColor,
+                type: "rounded"
+            },
+            backgroundOptions: {
+                color: "#ffffff",
+            },
+            cornersSquareOptions: {
+                type: "extra-rounded",
+                color: CONFIG.dark
+            },
+            cornersDotOptions: {
+                type: "dot",
+                color: CONFIG.dark
+            },
+            imageOptions: {
+                crossOrigin: "anonymous",
+                margin: 5
+            }
+        });
+
+        // DOM Elements
+        const fullNameInput = document.getElementById('fullName');
+        const emailInput = document.getElementById('email');
+        const expiryDisplay = document.getElementById('expiryDisplay');
+        const dotStyleSelect = document.getElementById('dotStyle');
+        const cornerStyleSelect = document.getElementById('cornerStyle');
+        const dotColorInput = document.getElementById('dotColor');
+        const cornerColorInput = document.getElementById('cornerColor');
+        const bgColorInput = document.getElementById('bgColor');
+        const dotColorHex = document.getElementById('dotColorHex');
+        const cornerColorHex = document.getElementById('cornerColorHex');
+        const bgColorHex = document.getElementById('bgColorHex');
+        const canvasContainer = document.getElementById('canvas-container');
+        const downloadPngBtn = document.getElementById('downloadPng');
+        const downloadSvgBtn = document.getElementById('downloadSvg');
+
+        // Functions
+        function calculateExpiryDate() {
+            const today = new Date();
+            const expiry = new Date(today);
+            expiry.setMonth(expiry.getMonth() + 3);
+            return expiry.toLocaleDateString('en-US', {
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric'
+            });
+        }
+
+        function updateQR() {
+            const name = fullNameInput.value || "Valued Referrer";
+            const email = emailInput.value || "N/A";
+            const expiry = calculateExpiryDate();
+
+            expiryDisplay.value = expiry;
+
+            // Generate the Redirection URL
+            // Since this is local, we'll try to get the current directory
+            let baseUrl = window.location.href.substring(0, window.location.href.lastIndexOf('/') + 1);
+            const rewardUrl = `${baseUrl}reward.html?name=${encodeURIComponent(name)}&email=${encodeURIComponent(email)}&expiry=${encodeURIComponent(expiry)}`;
+
+            qrCode.update({
+                data: rewardUrl,
+                dotsOptions: {
+                    color: dotColorInput.value,
+                    type: dotStyleSelect.value
+                },
+                backgroundOptions: {
+                    color: bgColorInput.value,
+                },
+                cornersSquareOptions: {
+                    type: cornerStyleSelect.value,
+                    color: cornerColorInput.value
+                },
+                cornersDotOptions: {
+                    type: cornerStyleSelect.value === 'square' ? 'square' : 'dot',
+                    color: cornerColorInput.value
+                }
+            });
+
+            dotColorHex.textContent = dotColorInput.value.toUpperCase();
+            cornerColorHex.textContent = cornerColorInput.value.toUpperCase();
+            bgColorHex.textContent = bgColorInput.value.toUpperCase();
+        }
+
+        // Event Listeners
+        [fullNameInput, emailInput, dotStyleSelect, cornerStyleSelect, dotColorInput, cornerColorInput, bgColorInput].forEach(el => {
+            el.addEventListener('input', updateQR);
+        });
+
+        downloadPngBtn.addEventListener('click', () => {
+            qrCode.download({ name: "teal-tech-qr", extension: "png" });
+        });
+
+        downloadSvgBtn.addEventListener('click', () => {
+            qrCode.download({ name: "teal-tech-qr", extension: "svg" });
+        });
+
+        // Initial Render
+        qrCode.append(canvasContainer);
+        updateQR();
+    </script>
+</body>
+
+</html>
