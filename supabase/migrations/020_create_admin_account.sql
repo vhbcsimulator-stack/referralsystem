@@ -1,0 +1,73 @@
+-- Migration 020: Create default admin account (Safe Method)
+-- Run this SQL script in your Supabase Dashboard SQL Editor (https://supabase.com/dashboard)
+
+-- STEP 1: Run this clean-up script to remove any failed/partial registration attempts
+DELETE FROM auth.users WHERE email = 'admin@vhbc.com.ph';
+DELETE FROM public.app_users WHERE email = 'admin@vhbc.com.ph';
+
+
+-- =========================================================================
+-- RECOMMENDED METHOD (Sign Up via Portal + SQL Promotion)
+-- =========================================================================
+-- 1. Go to your portal's Sign Up page in the browser.
+-- 2. Register a new account with:
+--    - Email: admin@vhbc.com.ph
+--    - Password: BHRI_ADMIN
+-- 3. Once successfully signed up, run the SQL query below in your Supabase SQL Editor
+--    to promote your account to verified admin:
+--
+--    UPDATE public.app_users
+--    SET role = 'admin',
+--        verification_status = 'verified'
+--    WHERE email = 'admin@vhbc.com.ph';
+-- =========================================================================
+
+
+-- =========================================================================
+-- ALTERNATIVE METHOD (Direct SQL Insert - only use if step above is not possible)
+-- =========================================================================
+-- CREATE EXTENSION IF NOT EXISTS pgcrypto;
+-- 
+-- DO $$
+-- DECLARE
+--   new_user_id uuid := gen_random_uuid();
+--   admin_email text := 'admin@vhbc.com.ph';
+--   admin_password text := 'BHRI_ADMIN';
+--   encrypted_pass text;
+-- BEGIN
+--   encrypted_pass := crypt(admin_password, gen_salt('bf', 10));
+-- 
+--   INSERT INTO auth.users (
+--     instance_id,
+--     id,
+--     aud,
+--     role,
+--     email,
+--     encrypted_password,
+--     email_confirmed_at,
+--     raw_app_meta_data,
+--     raw_user_meta_data,
+--     created_at,
+--     updated_at,
+--     is_super_admin
+--   ) VALUES (
+--     '00000000-0000-0000-0000-000000000000',
+--     new_user_id,
+--     'authenticated',
+--     'authenticated',
+--     admin_email,
+--     encrypted_pass,
+--     now(),
+--     '{"provider":"email","providers":["email"]}'::jsonb,
+--     jsonb_build_object('full_name', 'System Administrator', 'role', 'admin'),
+--     now(),
+--     now(),
+--     false
+--   );
+-- 
+--   UPDATE public.app_users
+--   SET role = 'admin',
+--       verification_status = 'verified'
+--   WHERE id = new_user_id;
+-- END $$;
+-- =========================================================================
